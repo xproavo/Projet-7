@@ -6,6 +6,7 @@ public class MoveManager : MonoBehaviour
 {
 
     public LayerMask GroundLayer;
+    public LayerMask LadderLayer;
 
 
     public float SpeedMove = 5;
@@ -23,6 +24,7 @@ public class MoveManager : MonoBehaviour
     public float DetectGroundRange = 0.75f;
     public bool IsGrounded = false;
 
+    public bool OnLadder = false;
 
     private Vector3 _move;
     private Rigidbody2D _body2d;
@@ -44,8 +46,11 @@ public class MoveManager : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 rayCastDir = Vector3.down;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayCastDir, DetectGroundRange, GroundLayer.value);
-        IsGrounded = hit.collider != null;
+        RaycastHit2D Grounded = Physics2D.Raycast(transform.position, rayCastDir, DetectGroundRange, GroundLayer.value);
+        IsGrounded = Grounded.collider != null;
+        
+        RaycastHit2D Ladder = Physics2D.Raycast(transform.position, rayCastDir, DetectGroundRange, LadderLayer.value);
+        OnLadder = Ladder.collider != null;
     }
 
     public void Movement()
@@ -92,6 +97,11 @@ public class MoveManager : MonoBehaviour
         print("pass3");
     }
     */
+
+    public void ClimbOnLadder(float value)
+    {
+        transform.position -= new Vector3(0, value * SpeedMove * Time.deltaTime);
+    }
 
     public void ChangeMoveXValue(float moveX)
         { _move.x = moveX; }

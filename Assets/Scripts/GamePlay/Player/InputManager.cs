@@ -19,12 +19,20 @@ public class InputManager : MonoBehaviour
     {
         if (_controlEnabled && !_stateManager.Death)
         {
+            if(Input.GetButton("Vertical") && _moveManager.OnLadder)
+            {
+                _moveManager.ClimbOnLadder(Input.GetAxis("Vertical"));
+                return;
+            }
+
             _moveManager.ChangeMoveXValue(Input.GetAxis("Horizontal"));
 
             if (Input.GetButtonDown("Jump"))
                 _moveManager.Jump = true;
             if (Input.GetButtonUp("Jump"))
                 _moveManager.Jump = false;
+
+
 
             //if (Input.GetKeyDown("a"))
             //    _moveManager.Roll = true; 
