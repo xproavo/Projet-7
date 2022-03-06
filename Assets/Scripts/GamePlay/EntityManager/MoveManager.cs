@@ -25,6 +25,7 @@ public class MoveManager : MonoBehaviour
     public bool IsGrounded = false;
 
     public bool OnLadder = false;
+    public bool Climb= false;
 
     private Vector3 _move;
     private Rigidbody2D _body2d;
@@ -101,8 +102,11 @@ public class MoveManager : MonoBehaviour
     public void ClimbOnLadder(float value)
     {
         transform.position += new Vector3(0, value * SpeedMove * Time.deltaTime);
+        print("Climb");
     }
 
+    public void NullMoveXValue()
+        { _move.x = 0; }
     public void ChangeMoveXValue(float moveX)
         { _move.x = moveX; }
     public float GetMoveXValue()

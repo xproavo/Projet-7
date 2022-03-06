@@ -47,24 +47,24 @@ public class AnimateManager : MonoBehaviour
 
             _animator.SetFloat("velocityX", Mathf.Abs(_moveManager.GetMoveXValue()));
             _animator.SetFloat("velocityY", _body2d.velocity.y);
-            _animator.SetBool("grounded", _moveManager.IsGrounded);
+            _animator.SetBool("Grounded", _moveManager.IsGrounded);
         }
 
         
         if (_stateManager.Death && !Die)
         {
             Die = true;
-            _animator.SetBool("respawn", false);
-            _animator.SetBool("die", Die);
+            _animator.SetBool("Respawn", false);
+            _animator.SetBool("Death", Die);
         }
         else if (_stateManager.Death && Die)
         {
-            _animator.SetBool("die", false);
+            _animator.SetBool("Death", false);
         }
         else if (!_stateManager.Death && Die)
         {
             Die = false;
-            _animator.SetBool("respawn", true);
+            _animator.SetBool("Respawn", true);
         }
         
     }

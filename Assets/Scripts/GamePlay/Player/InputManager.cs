@@ -24,7 +24,6 @@ public class InputManager : MonoBehaviour
                 _moveManager.ClimbOnLadder(Input.GetAxis("Vertical"));
                 return;
             }
-
             _moveManager.ChangeMoveXValue(Input.GetAxis("Horizontal"));
 
             if (Input.GetButtonDown("Jump"))
