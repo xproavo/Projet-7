@@ -100,7 +100,7 @@ public class MoveManager : MonoBehaviour
 
     public void ClimbOnLadder(float value)
     {
-        transform.position -= new Vector3(0, value * SpeedMove * Time.deltaTime);
+        transform.position += new Vector3(0, value * SpeedMove * Time.deltaTime);
     }
 
     public void ChangeMoveXValue(float moveX)
