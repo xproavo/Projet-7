@@ -166,6 +166,8 @@ GameObject:
   - component: {fileID: 149964054}
   - component: {fileID: 149964053}
   - component: {fileID: 149964055}
+  - component: {fileID: 149964058}
+  - component: {fileID: 149964059}
   - component: {fileID: 149964057}
   - component: {fileID: 149964056}
   m_Layer: 8
@@ -274,11 +276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e672537d686574441bf2e0e070ed3459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GroundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  SpeedMove: 5
-  IsGrounded: 0
 --- !u!61 &149964056
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -316,8 +313,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
-  m_Mass: 1.392139
+  m_UseAutoMass: 0
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -326,6 +323,38 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &149964058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149964051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6340a51e64d50e478e4260354c965a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  SpeedMove: 5
+  JumpForce: 5
+  Jump: 0
+  DetectGroundRange: 0.75
+  IsGrounded: 0
+--- !u!114 &149964059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149964051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed2ca31d73f20a4ead0eff9d603146e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &240967929
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,7 +832,7 @@ GameObject:
   - component: {fileID: 1078213084}
   - component: {fileID: 1078213083}
   - component: {fileID: 1078213082}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
