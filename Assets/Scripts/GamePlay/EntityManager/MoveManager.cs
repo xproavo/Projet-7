@@ -88,6 +88,7 @@ public class MoveManager : MonoBehaviour
 
         if (Movable)
         {
+            //_body2d.AddForce(_move * SpeedMove );
             transform.position += _move * SpeedMove * Time.deltaTime; //peux posezr problem a voir avec addForce
         }
     }

@@ -18,7 +18,6 @@ public class StateManager : MonoBehaviour
 
     private float _hitDelay = 0f;
 
-    public EntityType entityType;
     public AttackState attackState = AttackState.Check;
 
     private MoveManager _moveManager;
@@ -65,7 +64,6 @@ public class StateManager : MonoBehaviour
                 {
                     attackState = AttackState.Attack;
                     _animateManager.Attack1();
-                    _moveManager.Movable = false;
                 }
                 else
                     attackState = AttackState.End;
@@ -75,7 +73,7 @@ public class StateManager : MonoBehaviour
 
                 var hitGameObjectState = isAttackable.collider.gameObject.GetComponent<StateManager>();
                 hitGameObjectState.LifePoint -= Degat;
-                isAttackable.collider.gameObject.GetComponent<Rigidbody2D>().AddForce( new Vector2(dirAttack.x * HitForce, 1));
+                hitGameObjectState.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(dirAttack.x * HitForce, 5)); // marche pas
 
                 hitGameObjectState.Invicibility = true;
                 hitGameObjectState._hitDelay = hitGameObjectState.InvicibilityTime;
@@ -83,16 +81,10 @@ public class StateManager : MonoBehaviour
                 break;
             case AttackState.End:
                 attackState = AttackState.Check;
-                _moveManager.Movable = true;
                 break;
         }          
     }
 
-    public enum EntityType
-    {
-        Player,
-        Skeleton
-    }
 
    public enum AttackState
     {

@@ -48,7 +48,7 @@ public class AnimateManager : MonoBehaviour
 
         }
 
-        
+
         if (_stateManager.Death && !Die)
         {
             Die = true;
@@ -64,11 +64,26 @@ public class AnimateManager : MonoBehaviour
             Die = false;
             _animator.SetBool("Respawn", true);
         }
-        
     }
 
     public void Attack1()
     {
+        _moveManager.Movable = false;
         _animator.SetTrigger("Attack1");
+        StartCoroutine(EndAttack());
+    }
+
+    private IEnumerator EndAttack()
+    {
+        bool _continu = true;
+        while (_continu)
+        {
+            if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >=0.9)
+            {
+                _moveManager.Movable = true;
+                _continu = false;
+            }
+            yield return null;
+        }
     }
 }
