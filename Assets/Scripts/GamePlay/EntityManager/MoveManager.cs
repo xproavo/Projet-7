@@ -27,6 +27,8 @@ public class MoveManager : MonoBehaviour
     public bool OnLadder = false;
     public bool Climb= false;
 
+    public Vector3 SpawnPoint = Vector3.zero;
+
     private Vector3 _move;
     private Rigidbody2D _body2d;
     private SpriteRenderer _spriteRenderer;
