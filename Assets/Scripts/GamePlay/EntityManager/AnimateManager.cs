@@ -45,10 +45,7 @@ public class AnimateManager : MonoBehaviour
             _animator.SetFloat("velocityX", Mathf.Abs(_moveManager.GetMoveXValue()));
             _animator.SetFloat("velocityY", _body2d.velocity.y);
             _animator.SetBool("Grounded", _moveManager.IsGrounded);
-            if (_stateManager.attackState == StateManager.AttackState.Attack)
-            {
-                _animator.SetTrigger("Attack1");
-            }
+
         }
 
         
@@ -68,5 +65,10 @@ public class AnimateManager : MonoBehaviour
             _animator.SetBool("Respawn", true);
         }
         
+    }
+
+    public void Attack1()
+    {
+        _animator.SetTrigger("Attack1");
     }
 }

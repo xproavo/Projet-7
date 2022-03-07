@@ -22,10 +22,12 @@ public class StateManager : MonoBehaviour
     public AttackState attackState = AttackState.Check;
 
     private MoveManager _moveManager;
+    private AnimateManager _animateManager;
 
     private void Awake()
     {
         _moveManager = GetComponent<MoveManager>();
+        _animateManager = GetComponent<AnimateManager>();
     }
 
 
@@ -62,6 +64,7 @@ public class StateManager : MonoBehaviour
                 if (!isAttackable.collider.gameObject.GetComponent<StateManager>().Death && !isAttackable.collider.gameObject.GetComponent<StateManager>().Invicibility)
                 {
                     attackState = AttackState.Attack;
+                    _animateManager.Attack1();
                     _moveManager.Movable = false;
                 }
                 else

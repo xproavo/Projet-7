@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 149964056}
   m_Layer: 11
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,7 +186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149964051}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.59, y: 2.12, z: 0}
+  m_LocalPosition: {x: -69.94, y: 1.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -349,6 +349,7 @@ MonoBehaviour:
   IsGrounded: 0
   OnLadder: 0
   Climb: 0
+  Movable: 1
 --- !u!114 &149964059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,7 +376,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LifePoint: 20
+  Degat: 2
+  AttackRange: 1
+  HitForce: 1
+  InvicibilityTime: 30
+  Invicibility: 0
   Death: 0
+  entityType: 0
+  attackState: 0
 --- !u!1 &189242958
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,7 +1006,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31.59, y: 2.12, z: -10}
+  m_LocalPosition: {x: -69.94, y: 1.97, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2183,7 +2191,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0048675537, y: -0.01557833}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2194,7 +2202,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8924866, y: 1.3738807}
+  m_Size: {x: 8, y: 1}
   m_EdgeRadius: 0
 --- !u!95 &1130360161
 Animator:
@@ -2306,6 +2314,7 @@ MonoBehaviour:
   IsGrounded: 0
   OnLadder: 0
   Climb: 0
+  Movable: 1
 --- !u!114 &1130360165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2319,7 +2328,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LifePoint: 10
+  Degat: 2
+  AttackRange: 1
+  HitForce: 1
+  InvicibilityTime: 30
+  Invicibility: 0
   Death: 0
+  entityType: 0
+  attackState: 0
 --- !u!114 &1130360166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2336,6 +2352,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   DetectEnemyRange: 5
+  AttackRange: 1
+  _focusEnemy: 0
 --- !u!1 &1207585446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2955,7 +2973,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.862745, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2972,7 +2990,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1683208174}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31.59, y: 2.12, z: -10}
+  m_LocalPosition: {x: -69.94, y: 1.97, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
