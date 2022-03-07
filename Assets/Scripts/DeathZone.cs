@@ -8,7 +8,7 @@ public class DeathZone : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.transform.position = GameObject.FindGameObjectWithTag("PlayerSpawn").transform.position;
+            collision.transform.position = collision.GetComponent<MoveManager>().SpawnPoint;
         }
     }
 }
