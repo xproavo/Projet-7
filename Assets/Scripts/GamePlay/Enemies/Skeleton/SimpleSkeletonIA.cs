@@ -7,6 +7,8 @@ public class SimpleSkeletonIA : MonoBehaviour
     public LayerMask PlayerLayer;
     public float DetectEnemyRange = 5f;
 
+    public float AttackRange = 1f;
+
     private Vector3 _dirSee;
 
     private bool _focusEnemy = false;
@@ -15,11 +17,13 @@ public class SimpleSkeletonIA : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
     private MoveManager _moveManager;
+    private StateManager _stateManager;
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _moveManager = GetComponent<MoveManager>();
+        _stateManager = GetComponent<StateManager>();
     }
 
     private void Update()
@@ -40,6 +44,14 @@ public class SimpleSkeletonIA : MonoBehaviour
         {
             StartCoroutine("Waiting");
             _waitCorotineStart = true;
+        }
+        if (_focusEnemy && !Detect.collider.GetComponent<StateManager>().Death)
+        {
+            _stateManager.Attack(_dirSee, AttackRange, PlayerLayer);
+        }
+        else if (_focusEnemy)
+        {
+            _focusEnemy = false;
         }
     }
 
@@ -68,6 +80,7 @@ public class SimpleSkeletonIA : MonoBehaviour
         }
     }
 
+    /*
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -76,5 +89,5 @@ public class SimpleSkeletonIA : MonoBehaviour
             _dir = Vector3.left;
         Gizmos.DrawLine(transform.position, transform.position + _dir * DetectEnemyRange );
     }
-
+    */
 }

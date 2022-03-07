@@ -30,10 +30,7 @@ public class AnimateManager : MonoBehaviour
     private void Update()
     {
         //_animator.SetBool("roll", _moveManager.Roll);
-    }
 
-    private void FixedUpdate()
-    {
         if (!Die)
         {
             if (_moveManager.GetMoveXValue() > 0f)
@@ -48,6 +45,10 @@ public class AnimateManager : MonoBehaviour
             _animator.SetFloat("velocityX", Mathf.Abs(_moveManager.GetMoveXValue()));
             _animator.SetFloat("velocityY", _body2d.velocity.y);
             _animator.SetBool("Grounded", _moveManager.IsGrounded);
+            if (_stateManager.attackState == StateManager.AttackState.Attack)
+            {
+                _animator.SetTrigger("Attack1");
+            }
         }
 
         

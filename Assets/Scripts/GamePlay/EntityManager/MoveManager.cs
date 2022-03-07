@@ -28,6 +28,7 @@ public class MoveManager : MonoBehaviour
     public bool Climb= false;
 
     private Vector3 _move;
+    public bool Movable = true;
     private Rigidbody2D _body2d;
     private SpriteRenderer _spriteRenderer;
 
@@ -81,10 +82,12 @@ public class MoveManager : MonoBehaviour
             Roll = false;
         }
         */
-    
 
 
-        transform.position += _move * SpeedMove * Time.deltaTime;
+        if (Movable)
+        {
+            transform.position += _move * SpeedMove * Time.deltaTime; //peux posezr problem a voir avec addForce
+        }
     }
 
 
