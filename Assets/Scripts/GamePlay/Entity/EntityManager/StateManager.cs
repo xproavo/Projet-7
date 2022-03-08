@@ -69,6 +69,7 @@ public class StateManager : MonoBehaviour
                     attackState = AttackState.End;
                 break;
             case AttackState.Attack:
+
                 attackState = AttackState.End;
 
                 var hitGameObjectState = isAttackable.collider.gameObject.GetComponent<StateManager>();
