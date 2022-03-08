@@ -9,7 +9,7 @@ public class CheckpointManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<MoveManager>().SpawnPoint = transform.position;
-            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 }
