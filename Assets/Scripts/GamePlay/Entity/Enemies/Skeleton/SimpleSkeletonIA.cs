@@ -37,6 +37,15 @@ public class SimpleSkeletonIA : MonoBehaviour
             _moveManager.ChangeMoveXValue(_dirMove.x);
             _stateManager.Attack(_dirSee, AttackRange, PlayerLayer);
         }
+
+        if (GameManager.Instance.CurrentTimeOfDay == GameManager.TimeOfDay.Night)
+        {
+            _stateManager.Death = false;
+        }
+        else
+        {
+            _stateManager.Death = true;
+        }
     }
 
     private IEnumerator Waiting()

@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        } else
+        {
+            Destroy(this);
+        }
+        _player = GameObject.FindGameObjectWithTag("Player");
+        InitTimeOfDay();
+    }
+
     private GameObject _player;
-
-    public Light GlobalLight;
-
-    public Color DayColor;
-    public Color NightColor;
-
-    [SerializeField]
-    private AnimationCurve _fromDayToNightLerp;
-
-
-    [SerializeField]
-    private AnimationCurve _fromNightToDayLerp;
-
 
     [SerializeField]
     private float _timeOfDayLength;
@@ -36,30 +38,24 @@ public class GameManager : MonoBehaviour
     public delegate void TimeOfDayDelegate(float transitionDuration, TimeOfDay timeOfDay);
     public event TimeOfDayDelegate OnTimeOfDaysChanged;
 
-    private void Awake()
-    {
-        _player = GameObject.FindGameObjectWithTag("Player");
-    }
 
     
     private void InitTimeOfDay()
     {
         CurrentTimeOfDay = TimeOfDay.Day;
-
+        StartCoroutine(UpdateTimeOfDayCoroutine());
     }
 
     private IEnumerator UpdateTimeOfDayCoroutine()
     {
-        float counter = 0f;
-
-        while (counter < _transitionDayChanged)
+        while (_player != null  && !_player.GetComponent<StateManager>().Death)
         {
-            //GlobalLight.color = Color.Lerp(_)
-            yield return null;
+            yield return new WaitForSeconds(_timeOfDayLength);
+            if (CurrentTimeOfDay == TimeOfDay.Day)
+                CurrentTimeOfDay = TimeOfDay.Night;
+            else
+                CurrentTimeOfDay = TimeOfDay.Day;
+            OnTimeOfDaysChanged?.Invoke(_transitionDayChanged, CurrentTimeOfDay);
         }
-
-
     }
-
-
 }
