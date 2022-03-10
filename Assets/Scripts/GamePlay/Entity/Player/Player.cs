@@ -12,7 +12,9 @@ public class Player : MonoBehaviour
         _stateManager = GetComponent<StateManager>();
 
         _stateManager.OnTakeDamage += UIManager.Instance.UpdatePlayerLifeBar;
+        _stateManager.OnTakeDamage += UIManager.Instance.OnPlayerDeath;
     }
+
 
 
 }

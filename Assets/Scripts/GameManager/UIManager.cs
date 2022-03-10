@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     private Slider _lifePointSlider;
 
     private GameObject _player;
+    public GameObject GameOverUI;
 
     private void Awake()
     {
@@ -40,4 +41,11 @@ public class UIManager : MonoBehaviour
     {
         _lifePointSlider.value = _player.gameObject.GetComponent<StateManager>().LifePoint;
     }
+    
+    public void OnPlayerDeath(float damage)
+    {
+        if (_player.gameObject.GetComponent<StateManager>().Death)
+            GameOverUI.gameObject.SetActive(true);
+    }
+
 }

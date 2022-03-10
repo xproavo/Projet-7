@@ -129,14 +129,10 @@ public class StateManager : MonoBehaviour
         {
             Death = true;
             ThrowCoin();
-            Die();
         }
     } 
 
-    public void Die()
-    {
-        GameOverManager.instance.OnPlayerDeath();
-    }
+
 
     public enum AttackState
     {
