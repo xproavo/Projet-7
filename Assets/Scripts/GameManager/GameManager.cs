@@ -6,18 +6,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        } else
-        {
-            Destroy(this);
-        }
-        _player = GameObject.FindGameObjectWithTag("Player");
-        InitTimeOfDay();
-    }
 
     private GameObject _player;
 
@@ -29,17 +17,55 @@ public class GameManager : MonoBehaviour
 
     public TimeOfDay CurrentTimeOfDay;
 
-    public enum TimeOfDay
-    {
-        Day,
-        Night
-    }
+    public bool DayNightSys = true; 
+
 
     public delegate void TimeOfDayDelegate(float transitionDuration, TimeOfDay timeOfDay);
     public event TimeOfDayDelegate OnTimeOfDaysChanged;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        } else
+        {
+            Destroy(this);
+        }
+        _player = GameObject.FindGameObjectWithTag("Player");
 
-    
+        if (DayNightSys)
+            InitTimeOfDay();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("n"))
+        {
+            ChangeTimeOfDay();
+        }
+    }
+
+    public void ChangeTimeOfDay() 
+    {
+        DayNightSys = !DayNightSys;
+        if (DayNightSys)
+            InitTimeOfDay();
+        else
+            StopTimeofDay();
+    }
+
+    private void StopTimeofDay()
+    {
+        StopCoroutine(UpdateTimeOfDayCoroutine());//problem a voir avec Kevin
+        if (CurrentTimeOfDay != TimeOfDay.Day)
+        {
+            CurrentTimeOfDay = TimeOfDay.Day;
+            OnTimeOfDaysChanged?.Invoke(_transitionDayChanged, CurrentTimeOfDay);
+
+        }
+    }
+
     private void InitTimeOfDay()
     {
         CurrentTimeOfDay = TimeOfDay.Day;
@@ -56,6 +82,14 @@ public class GameManager : MonoBehaviour
             else
                 CurrentTimeOfDay = TimeOfDay.Day;
             OnTimeOfDaysChanged?.Invoke(_transitionDayChanged, CurrentTimeOfDay);
+
         }
+    }
+
+
+    public enum TimeOfDay
+    {
+        Day,
+        Night
     }
 }

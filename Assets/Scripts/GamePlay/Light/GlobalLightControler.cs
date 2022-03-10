@@ -31,6 +31,7 @@ public class GlobalLightControler : MonoBehaviour
     private void UpdateLighting(float transitionDuration, GameManager.TimeOfDay timeOfDay)
     {
         StartCoroutine(UpdateLightingCoroutine(transitionDuration, timeOfDay));
+
     } 
 
     private IEnumerator UpdateLightingCoroutine(float transitionDuration, GameManager.TimeOfDay timeOfDay)
@@ -44,7 +45,6 @@ public class GlobalLightControler : MonoBehaviour
         while (counter < transitionDuration)
         {
             float transition = curve.Evaluate(counter / transitionDuration); 
-            print(transition);
             _globalLight.color = Color.Lerp(_dayColor, _nightColor, transition);
 
             counter += Time.deltaTime;

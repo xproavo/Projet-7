@@ -6,7 +6,7 @@ public class StateManager : MonoBehaviour
 {
     public float LifePoint = 20f;
 
-    public float Degat = 2f;
+    public float Damage = 2f;
     public float AttackRange = 1f;
     public RaycastHit2D isAttackable;
     public float HitForce = 1f;
@@ -16,12 +16,15 @@ public class StateManager : MonoBehaviour
 
     public bool Death = false;
 
-    private float _hitDelay = 0f;
 
     public AttackState attackState = AttackState.Check;
 
     private MoveManager _moveManager;
     private AnimateManager _animateManager;
+
+    public delegate void HitDelegate(float damage);
+    public event HitDelegate OnTakeDamage;
+
 
     private void Awake()
     {
@@ -29,23 +32,14 @@ public class StateManager : MonoBehaviour
         _animateManager = GetComponent<AnimateManager>();
     }
 
+    private void Start()
+    {
+        OnTakeDamage += Hit;
+    }
+
 
     private void Update()
     {
-        
-        if (LifePoint <= 0) // creer un delegate
-        {
-
-            Death = true;
-        }
-        if (Invicibility)
-        {
-            if (_hitDelay <= 0)
-            {
-                Invicibility = false;
-            }
-            _hitDelay -= Time.deltaTime;
-        }
     }
 
     public void Attack(Vector2 dirAttack, float DetectRange, LayerMask layerHit)
@@ -70,14 +64,16 @@ public class StateManager : MonoBehaviour
                 break;
             case AttackState.Attack:
 
-                attackState = AttackState.End;
 
-                var hitGameObjectState = isAttackable.collider.gameObject.GetComponent<StateManager>();
-                hitGameObjectState.LifePoint -= Degat;
-                hitGameObjectState.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(dirAttack.x * HitForce, 5)); // marche pas
+                if (_animateManager.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
+                {
+                    attackState = AttackState.End;
 
-                hitGameObjectState.Invicibility = true;
-                hitGameObjectState._hitDelay = hitGameObjectState.InvicibilityTime;
+                    var hitGameObjectState = isAttackable.collider.gameObject.GetComponent<StateManager>();
+                    hitGameObjectState.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(dirAttack.x * HitForce, 5)); // marche pas
+
+                    hitGameObjectState.gameObject.GetComponent<StateManager>().OnTakeDamage?.Invoke(Damage);
+                }
 
                 break;
             case AttackState.End:
@@ -85,6 +81,26 @@ public class StateManager : MonoBehaviour
                 break;
         }          
     }
+
+
+    private IEnumerator InvicibilityCoroutine()
+    {
+        Invicibility = true;
+        yield return new WaitForSeconds(InvicibilityTime);
+        Invicibility = false;
+    }
+
+
+    public void Hit(float damage)
+
+    {
+        LifePoint -= damage;
+        StartCoroutine(InvicibilityCoroutine());
+        if (LifePoint <= 0)
+        {
+            Death = true;
+        }
+    } 
 
 
    public enum AttackState

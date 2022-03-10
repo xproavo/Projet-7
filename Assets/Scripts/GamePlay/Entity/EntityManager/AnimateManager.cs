@@ -69,6 +69,7 @@ public class AnimateManager : MonoBehaviour
     public void Attack1()
     {
         _moveManager.Movable = false;
+        _moveManager.ChangeMoveXValue(0);
         _animator.SetTrigger("Attack1");
         StartCoroutine(EndAttack());
     }
