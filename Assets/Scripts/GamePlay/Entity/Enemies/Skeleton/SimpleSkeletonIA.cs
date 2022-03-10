@@ -7,7 +7,7 @@ public class SimpleSkeletonIA : MonoBehaviour
     public LayerMask PlayerLayer;
     public float DetectEnemyRange = 5f;
 
-    public float MaxCoin = 2f;
+    public int MaxCoin = 2;
 
     public float AttackRange = 1f;
 

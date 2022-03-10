@@ -46,7 +46,7 @@ public class StateManager : MonoBehaviour
         if (hit)
         {
             hit = false;
-            Hit(2);
+            this.OnTakeDamage?.Invoke(5);
         }
     }
 
@@ -63,9 +63,9 @@ public class StateManager : MonoBehaviour
             for (int i = 0; i < Coin; i++)
             {
                 //GameManager.Instance.CoinPrefab;
-                GameObject clone = GameObject.Instantiate(GameManager.Instance.CoinPrefab, transform.position,  Quaternion.identity);
-                var randX = Random.Range(-5, 5);
-                var randY = Random.Range(2, 5);
+                GameObject clone = GameObject.Instantiate(GameManager.Instance.CoinPrefab, transform.position + Vector3.up * 1,  Quaternion.identity);
+                var randX = Random.Range(-250, 250);
+                var randY = Random.Range(100, 300);
                 clone.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(randX, randY));
             }
         }
@@ -99,7 +99,7 @@ public class StateManager : MonoBehaviour
                     attackState = AttackState.End;
 
                     var hitGameObjectState = isAttackable.collider.gameObject.GetComponent<StateManager>();
-                    hitGameObjectState.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(dirAttack.x * HitForce, 5)); // marche pas
+                    hitGameObjectState.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(dirAttack.x * HitForce , 100)); // marche pas
 
                     hitGameObjectState.gameObject.GetComponent<StateManager>().OnTakeDamage?.Invoke(Damage);
                 }
@@ -127,6 +127,7 @@ public class StateManager : MonoBehaviour
         StartCoroutine(InvicibilityCoroutine());
         if (LifePoint <= 0)
         {
+            _moveManager.ChangeMoveXValue(0);
             Death = true;
             ThrowCoin();
         }
