@@ -7,12 +7,15 @@ public class SimpleSkeletonIA : MonoBehaviour
     public LayerMask PlayerLayer;
     public float DetectEnemyRange = 5f;
 
+    public float MaxCoin = 2f;
+
     public float AttackRange = 1f;
 
     private Vector3 _dirSee;
     private Vector3 _dirMove;
 
     public bool _focusEnemy = false;
+
 
 
     private SpriteRenderer _spriteRenderer;
@@ -24,6 +27,8 @@ public class SimpleSkeletonIA : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _moveManager = GetComponent<MoveManager>();
         _stateManager = GetComponent<StateManager>();
+
+        _stateManager.Coin = Random.Range(0, MaxCoin); 
 
         StartCoroutine("Waiting");
     }
@@ -95,8 +100,6 @@ public class SimpleSkeletonIA : MonoBehaviour
             _dirMove = Vector3.zero;
         }
     }
-
-
 
     private void OnDrawGizmos()
     {

@@ -5,6 +5,9 @@ using UnityEngine;
 public class StateManager : MonoBehaviour
 {
     public float LifePoint = 20f;
+    public float Coin = 0f;
+
+    public bool hit = false;
 
     public float Damage = 2f;
     public float AttackRange = 1f;
@@ -40,6 +43,32 @@ public class StateManager : MonoBehaviour
 
     private void Update()
     {
+        if (hit)
+        {
+            hit = false;
+            Hit(2);
+        }
+    }
+
+
+    public void TakeCoin(float value)
+    {
+        Coin += value;
+    }
+
+    public void ThrowCoin()
+    {
+        if (Coin > 0)
+        {
+            for (int i = 0; i < Coin; i++)
+            {
+                //GameManager.Instance.CoinPrefab;
+                GameObject clone = GameObject.Instantiate(GameManager.Instance.CoinPrefab, transform.position,  Quaternion.identity);
+                var randX = Random.Range(-5, 5);
+                var randY = Random.Range(2, 5);
+                clone.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(randX, randY));
+            }
+        }
     }
 
     public void Attack(Vector2 dirAttack, float DetectRange, LayerMask layerHit)
@@ -99,11 +128,12 @@ public class StateManager : MonoBehaviour
         if (LifePoint <= 0)
         {
             Death = true;
+            ThrowCoin();
         }
     } 
 
 
-   public enum AttackState
+    public enum AttackState
     {
         Check,
         Prepare,

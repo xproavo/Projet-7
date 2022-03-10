@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
 
     public TimeOfDay CurrentTimeOfDay;
 
-    public bool DayNightSys = true; 
+    public bool DayNightSys = true;
+
+    public GameObject CoinPrefab;
 
 
     public delegate void TimeOfDayDelegate(float transitionDuration, TimeOfDay timeOfDay);
