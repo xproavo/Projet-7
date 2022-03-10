@@ -54,6 +54,7 @@ public class AnimateManager : MonoBehaviour
             Die = true;
             _animator.SetBool("Respawn", false);
             _animator.SetBool("Death", Die);
+            
         }
         else if (_stateManager.Death && Die)
         {
