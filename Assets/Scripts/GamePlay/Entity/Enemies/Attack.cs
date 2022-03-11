@@ -27,7 +27,7 @@ public class Attack : MonoBehaviour
 
     }
 
-    public void DoAttack(Vector2 dirAttack, float DetectRange, LayerMask layerHit)
+    public void DoAttackWithMeleeWeapon(Vector2 dirAttack, float DetectRange, LayerMask layerHit)
     {
         switch (attackState)
         {

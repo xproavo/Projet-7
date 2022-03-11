@@ -24,7 +24,7 @@ public class SimpleSkeletonIA : MonoBehaviour
         _stateManager = GetComponent<StateManager>();
         _attack = GetComponent<Attack>();
 
-        _stateManager.Coin = Random.Range(0, MaxCoin);
+        _stateManager.Coin = Random.Range(0, MaxCoin + 1);
 
         InitCoroutine();
     }
@@ -46,7 +46,7 @@ public class SimpleSkeletonIA : MonoBehaviour
                 _moveManager.ChangeMoveXValue(_dirMove.x);
 
                 if (!_stateManager.Invicibility)
-                    _attack.DoAttack(_moveManager.DirectionSee(), _stateManager.AttackRange, _stateManager.EnemyLayer);
+                    _attack.DoAttackWithMeleeWeapon(_moveManager.DirectionSee(), _stateManager.AttackRange, _stateManager.EnemyLayer);
             }
         }
         if (GameManager.Instance.CurrentTimeOfDay == GameManager.TimeOfDay.Night && _stateManager.Death && _stateManager.LifePoint > 0)
