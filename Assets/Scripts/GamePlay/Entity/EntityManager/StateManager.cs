@@ -94,8 +94,9 @@ public class StateManager : MonoBehaviour
             _moveManager.ChangeMoveXValue(0);
             Death = true;
             ThrowCoin();
+            return;
         }
-    } 
+    }
 
 
     public void isDeath(float damage)
