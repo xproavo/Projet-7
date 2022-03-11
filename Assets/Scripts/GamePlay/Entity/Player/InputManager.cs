@@ -29,7 +29,9 @@ public class InputManager : MonoBehaviour
             _moveManager.ChangeMoveXValue(Input.GetAxis("Horizontal"));
 
             if (Input.GetButtonDown("Jump"))
-                _moveManager.Jump = true;
+                _moveManager.Jump = true; 
+            if (Input.GetButtonUp("Jump"))
+                _moveManager.Jump = false;
 
             if (Input.GetKeyDown("a"))
                 _player.Attack();

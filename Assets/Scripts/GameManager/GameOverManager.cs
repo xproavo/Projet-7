@@ -5,15 +5,6 @@ public class GameOverManager : MonoBehaviour
 {
     public GameObject gameOverUI;
     public static GameOverManager instance;
-    public string SceneToLoad;
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.LogWarning("il y a plus d'une instance");
-            return;
-        }
-    }
    
 
     public void RetryButton()
