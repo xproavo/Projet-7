@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StateManager : MonoBehaviour
 {
-    public float LifePoint = 20f;
+    public float LifePoint = 10f;
     public float Coin = 0f;
 
     public bool hit = false;
@@ -13,7 +13,7 @@ public class StateManager : MonoBehaviour
     public float AttackRange = 1f;
     public float HitForce = 1f;
 
-    public float InvicibilityTime = 30f;
+    public float InvicibilityTime = 10f;
     public bool Invicibility = false;
 
     public bool Death = false;
