@@ -69,6 +69,7 @@ public class StateManager : MonoBehaviour
                 var randY = Random.Range(100, 300);
                 clone.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(randX, randY));
             }
+            Coin = 0;
         }
     }
 

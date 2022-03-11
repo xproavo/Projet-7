@@ -8,6 +8,8 @@ public class SkeletonMageIA : MonoBehaviour
     private bool _playerOnTheZone = true;
     public bool attack;
 
+    private Vector3 _targetPos;
+
     private Attack _attack;
     private StateManager _stateManager;
 
@@ -32,11 +34,9 @@ public class SkeletonMageIA : MonoBehaviour
         {
             if (attack)
             {
-                // vector, distance
-                print("attack");
                 var dir = Player.transform.position - transform.position;
                 var distance = Vector3.Distance(transform.position, Player.transform.position);
-                _attack.DoAttackWithFireBall(Vector3.zero, distance, _stateManager.EnemyLayer);
+                _attack.DoAttackWithFireBall(dir, distance, _stateManager.EnemyLayer);
             }
         }
     }
@@ -46,14 +46,8 @@ public class SkeletonMageIA : MonoBehaviour
         Gizmos.color = Color.green;
 
         var dir = Player.transform.position - transform.position;
-        
-
         var distance = Vector3.Distance(transform.position, Player.transform.position);
 
-
-
-        //var distance = Vector3.Distance(Player.transform.position, transform.position);
-
-        Gizmos.DrawLine(transform.position,   dir * distance);
+        Gizmos.DrawLine(transform.position,  transform.position + dir * distance);
     }
 }
