@@ -4,53 +4,73 @@ using UnityEngine;
 
 public class SimpleSkeletonIA : MonoBehaviour
 {
-    public LayerMask PlayerLayer;
-    public float DetectEnemyRange = 5f;
 
     public int MaxCoin = 2;
 
-    public float AttackRange = 1f;
+    public Vector2 WaitingAfterReturnMinAndMaxSecond = new Vector2(3, 10);
 
-    private Vector3 _dirSee;
     private Vector3 _dirMove;
-
-    public bool _focusEnemy = false;
-
-
+    private bool _focusEnemy = false;
 
     private SpriteRenderer _spriteRenderer;
     private MoveManager _moveManager;
     private StateManager _stateManager;
+    private Attack _attack;
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _moveManager = GetComponent<MoveManager>();
         _stateManager = GetComponent<StateManager>();
+        _attack = GetComponent<Attack>();
 
-        _stateManager.Coin = Random.Range(0, MaxCoin); 
+        _stateManager.Coin = Random.Range(0, MaxCoin);
 
-        StartCoroutine("Waiting");
+        InitCoroutine();
+    }
+
+    private void Start()
+    {
+        _stateManager.OnTakeDamage += StopAllCoroutine;
+
     }
 
     private void Update()
     {
-        _moveManager.NullMoveXValue();
-        if (_focusEnemy)
+        if (!_stateManager.Death)
         {
-            _dirMove.Normalize();
-            _moveManager.ChangeMoveXValue(_dirMove.x);
-            _stateManager.Attack(_dirSee, AttackRange, PlayerLayer);
-        }
+            _moveManager.NullMoveXValue();
+            if (_focusEnemy)
+            {
+                _dirMove.Normalize();
+                _moveManager.ChangeMoveXValue(_dirMove.x);
 
-        if (GameManager.Instance.CurrentTimeOfDay == GameManager.TimeOfDay.Night)
+                if (!_stateManager.Invicibility)
+                    _attack.DoAttack(_moveManager.DirectionSee(), _stateManager.AttackRange, _stateManager.EnemyLayer);
+            }
+        }
+        if (GameManager.Instance.CurrentTimeOfDay == GameManager.TimeOfDay.Night && _stateManager.Death && _stateManager.LifePoint > 0)
         {
             _stateManager.Death = false;
+            InitCoroutine();
         }
-        else
+        else if (GameManager.Instance.CurrentTimeOfDay == GameManager.TimeOfDay.Day && !_stateManager.Death)
         {
             _stateManager.Death = true;
+            StopAllCoroutine(0);
         }
+    }
+
+
+    private void InitCoroutine()
+    {
+        StartCoroutine(Waiting());
+    }
+
+    public void StopAllCoroutine(float damage)
+    {
+        if (_stateManager.Death)
+            StopAllCoroutines();
     }
 
     private IEnumerator Waiting()
@@ -59,26 +79,22 @@ public class SimpleSkeletonIA : MonoBehaviour
         {
             _spriteRenderer.flipX = !_spriteRenderer.flipX;
 
-            if (_spriteRenderer.flipX)
-                _dirSee = Vector3.left;
-            else
-                _dirSee = Vector3.right;
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(Random.Range(WaitingAfterReturnMinAndMaxSecond.x, WaitingAfterReturnMinAndMaxSecond.y));
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.transform.CompareTag("Player"))
+        if (collision.gameObject.transform.CompareTag("Player") && !_stateManager.Death)
         {
-            StopCoroutine("Waiting");
+            StopCoroutine(Waiting());
             _focusEnemy = true;
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision != null)
+        if (collision != null && !_stateManager.Death)
         {
             if (collision.transform.CompareTag("Player"))
             {
@@ -94,22 +110,10 @@ public class SimpleSkeletonIA : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.transform.CompareTag("Player"))
+        if (collision.gameObject.transform.CompareTag("Player") && !_stateManager.Death)
         {
-            StartCoroutine("Waiting");
+            StartCoroutine(Waiting());
             _dirMove = Vector3.zero;
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        var _dir = Vector3.right;
-        if(_spriteRenderer != null)
-        {
-            if (_spriteRenderer.flipX)
-                _dir = Vector3.left;
-        }
-        Gizmos.DrawLine(transform.position, transform.position + _dir * DetectEnemyRange );
-    }  
 }

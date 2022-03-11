@@ -8,6 +8,7 @@ TagManager:
   - GameManager
   - Coin
   - GameOverUI
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -13,7 +13,7 @@ public class AnimateManager : MonoBehaviour
     private MoveManager _moveManager;
     private StateManager _stateManager;
 
-    public bool Die;
+    private bool _die;
 
     private void Awake()
     {
@@ -24,14 +24,14 @@ public class AnimateManager : MonoBehaviour
         _moveManager = GetComponent<MoveManager>();
         _stateManager = GetComponent<StateManager>();
 
-        Die = false;
+        _die = false;
     }
 
     private void Update()
     {
         //_animator.SetBool("roll", _moveManager.Roll);
 
-        if (!Die)
+        if (!_die)
         {
             if (_moveManager.GetMoveXValue() > 0f)
             {
@@ -49,29 +49,29 @@ public class AnimateManager : MonoBehaviour
         }
 
 
-        if (_stateManager.Death && !Die)
+        if (_stateManager.Death && !_die)
         {
-            Die = true;
+            _die = true;
             _animator.SetBool("Respawn", false);
-            _animator.SetBool("Death", Die);
+            _animator.SetBool("Death", _die);
             
         }
-        else if (_stateManager.Death && Die)
+        else if (_stateManager.Death && _die)
         {
             _animator.SetBool("Death", false);
         }
-        else if (!_stateManager.Death && Die)
+        else if (!_stateManager.Death && _die)
         {
-            Die = false;
+            _die = false;
             _animator.SetBool("Respawn", true);
         }
     }
 
-    public void Attack1()
+    public void Attack(string attackName)
     {
         _moveManager.Movable = false;
         _moveManager.ChangeMoveXValue(0);
-        _animator.SetTrigger("Attack1");
+        _animator.SetTrigger(attackName);
         StartCoroutine(EndAttack());
     }
 

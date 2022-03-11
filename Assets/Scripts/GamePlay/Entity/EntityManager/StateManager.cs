@@ -11,7 +11,6 @@ public class StateManager : MonoBehaviour
 
     public float Damage = 2f;
     public float AttackRange = 1f;
-    public RaycastHit2D isAttackable;
     public float HitForce = 1f;
 
     public float InvicibilityTime = 30f;
@@ -19,8 +18,7 @@ public class StateManager : MonoBehaviour
 
     public bool Death = false;
 
-
-    public AttackState attackState = AttackState.Check;
+    public LayerMask EnemyLayer;
 
     private MoveManager _moveManager;
     private AnimateManager _animateManager;
@@ -33,11 +31,14 @@ public class StateManager : MonoBehaviour
     {
         _moveManager = GetComponent<MoveManager>();
         _animateManager = GetComponent<AnimateManager>();
+        OnTakeDamage += Hit;
+
     }
 
     private void Start()
     {
-        OnTakeDamage += Hit;
+        OnTakeDamage += isDeath;
+
     }
 
 
@@ -71,46 +72,10 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    public void Attack(Vector2 dirAttack, float DetectRange, LayerMask layerHit)
+    public void Attack(float damage)
     {
-        switch (attackState)
-        {
-            case AttackState.Check:
-                isAttackable = Physics2D.Raycast(transform.position, dirAttack, DetectRange, layerHit.value);
-                if (isAttackable.collider != null)
-                {
-                    attackState = AttackState.Prepare;
-                }
-                break;
-            case AttackState.Prepare:
-                if (!isAttackable.collider.gameObject.GetComponent<StateManager>().Death && !isAttackable.collider.gameObject.GetComponent<StateManager>().Invicibility)
-                {
-                    attackState = AttackState.Attack;
-                    _animateManager.Attack1();
-                }
-                else
-                    attackState = AttackState.End;
-                break;
-            case AttackState.Attack:
-
-
-                if (_animateManager.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
-                {
-                    attackState = AttackState.End;
-
-                    var hitGameObjectState = isAttackable.collider.gameObject.GetComponent<StateManager>();
-                    hitGameObjectState.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(dirAttack.x * HitForce , 100)); // marche pas
-
-                    hitGameObjectState.gameObject.GetComponent<StateManager>().OnTakeDamage?.Invoke(Damage);
-                }
-
-                break;
-            case AttackState.End:
-                attackState = AttackState.Check;
-                break;
-        }          
+        OnTakeDamage?.Invoke(damage);
     }
-
 
     private IEnumerator InvicibilityCoroutine()
     {
@@ -118,7 +83,6 @@ public class StateManager : MonoBehaviour
         yield return new WaitForSeconds(InvicibilityTime);
         Invicibility = false;
     }
-
 
     public void Hit(float damage)
 
@@ -134,12 +98,37 @@ public class StateManager : MonoBehaviour
     } 
 
 
-
-    public enum AttackState
+    public void isDeath(float damage)
     {
-        Check,
-        Prepare,
-        Attack,
-        End
+        if (Death)
+        {
+            StopAllCoroutines();
+            StartCoroutine(WaitToTouchGround());
+        }
+    }
+
+    private IEnumerator WaitToTouchGround()
+    {
+        bool _continu = true;
+        bool wait = false;
+        while (_continu)
+        {
+            if (this.GetComponent<Rigidbody2D>().velocity == Vector2.zero && wait)
+            {
+                this.GetComponent<Rigidbody2D>().gravityScale = 0;
+                this.GetComponent<Collider2D>().enabled = false;
+                if (this.transform.childCount > 0)
+                {
+                    for (int i = 0; i < this.transform.childCount; i++)
+                    {
+                        var child = transform.GetChild(i);
+                        child.GetComponent<Collider2D>().enabled = false;
+                    }
+                }
+                _continu = false;
+            }
+            yield return new WaitForSeconds(0.5f);
+            wait = true;
+        }
     }
 }

@@ -346,7 +346,7 @@ Animator:
   m_GameObject: {fileID: 149964051}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 945ee4130a05e524ca7caaa86945bd2d, type: 2}
+  m_Controller: {fileID: 9100000, guid: e5dce23023f730d4c849a6f533ab6dd3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -397,7 +397,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 217a34da322f09a4f915f2ca6befab73, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 423177b1411ba2b4f9852dfb3a65948e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -506,7 +506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed2ca31d73f20a4ead0eff9d603146e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Die: 0
 --- !u!114 &149964060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,16 +518,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4248bb1b12de10248be5415c28baf7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LifePoint: 20
-  Coin: 0
+  LifePoint: 5
+  Coin: 1
   hit: 0
   Damage: 2
   AttackRange: 1
-  HitForce: 1
+  HitForce: 150
   InvicibilityTime: 1
   Invicibility: 0
   Death: 0
-  attackState: 0
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &149964061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,6 +542,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5095397dec5b9b44c8c1bbeb8e64c19f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  AttackCouldown: 0
 --- !u!1 &189242958
 GameObject:
   m_ObjectHideFlags: 0
@@ -3820,10 +3825,11 @@ GameObject:
   - component: {fileID: 1130360161}
   - component: {fileID: 1130360160}
   - component: {fileID: 1130360159}
+  - component: {fileID: 1130360166}
   - component: {fileID: 1130360165}
   - component: {fileID: 1130360164}
   - component: {fileID: 1130360163}
-  - component: {fileID: 1130360166}
+  - component: {fileID: 1130360167}
   m_Layer: 10
   m_Name: Skeleton
   m_TagString: Untagged
@@ -3978,7 +3984,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed2ca31d73f20a4ead0eff9d603146e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Die: 0
 --- !u!114 &1130360164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4018,16 +4023,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4248bb1b12de10248be5415c28baf7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LifePoint: 10
+  LifePoint: 0.28
   Coin: 0
   hit: 0
   Damage: 2
   AttackRange: 1
-  HitForce: 1
-  InvicibilityTime: 30
+  HitForce: 150
+  InvicibilityTime: 3
   Invicibility: 0
   Death: 0
-  attackState: 0
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &1130360166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4040,13 +4047,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3480039efee9e74b97c12130c9a4047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 2048
-  DetectEnemyRange: 5
   MaxCoin: 2
-  AttackRange: 1
-  _focusEnemy: 0
+  WaitingAfterReturnMinAndMaxSecond: {x: 3, y: 10}
+--- !u!114 &1130360167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130360157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95983dcea7a993b419f0c1cd70113e81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackState: 0
 --- !u!1 &1142291487
 GameObject:
   m_ObjectHideFlags: 0
@@ -4589,7 +4604,7 @@ GameObject:
   - component: {fileID: 1429589378}
   m_Layer: 10
   m_Name: Bat
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4602,7 +4617,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1429589376}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 41.57, y: 0.14, z: 20}
+  m_LocalPosition: {x: 42.6, y: 5.42, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4622,13 +4637,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3480039efee9e74b97c12130c9a4047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 2048
-  DetectEnemyRange: 5
   MaxCoin: 2
-  AttackRange: 1
-  _focusEnemy: 0
+  WaitingAfterReturnMinAndMaxSecond: {x: 3, y: 10}
 --- !u!114 &1429589379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4641,7 +4651,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed2ca31d73f20a4ead0eff9d603146e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Die: 0
 --- !u!114 &1429589380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4690,7 +4699,9 @@ MonoBehaviour:
   InvicibilityTime: 30
   Invicibility: 0
   Death: 0
-  attackState: 0
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!50 &1429589382
 Rigidbody2D:
   serializedVersion: 4
@@ -4711,7 +4722,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!61 &1429589383
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6234,7 +6245,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.059333563, y: -0.006449342}
+  m_Offset: {x: 0.059333563, y: 0.097305}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6245,7 +6256,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.55628824, y: 0.011967301}
+  m_Size: {x: 0.55628824, y: 0.21947598}
   m_EdgeRadius: 0
 --- !u!1 &2004946370
 GameObject:
@@ -6521,7 +6532,7 @@ CompositeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_GeometryType: 0
   m_GenerationType: 0
-  m_EdgeRadius: 0.002
+  m_EdgeRadius: 0
   m_ColliderPaths:
   - m_Collider: {fileID: 2025241796}
     m_ColliderPaths:
@@ -22346,7 +22357,7 @@ CompositeCollider2D:
       - {x: 0.3789062, y: -39.98828}
       - {x: 0.5078125, y: -39.996094}
       - {x: 0.6289062, y: -39.996094}
-  m_VertexDistance: 0.0005
+  m_VertexDistance: 0.18
   m_OffsetDistance: 0
 --- !u!50 &2025241795
 Rigidbody2D:
@@ -34120,6 +34131,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4460881455965159269, guid: 613eb07459c2df442a10d31c92587ea5, type: 3}
+      propertyPath: m_Size.x
+      value: 0.15332603
+      objectReference: {fileID: 0}
+    - target: {fileID: 4460881455965159269, guid: 613eb07459c2df442a10d31c92587ea5, type: 3}
+      propertyPath: m_Size.y
+      value: 0.13266444
+      objectReference: {fileID: 0}
+    - target: {fileID: 4460881455965159269, guid: 613eb07459c2df442a10d31c92587ea5, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.004450798
+      objectReference: {fileID: 0}
+    - target: {fileID: 4460881455965159269, guid: 613eb07459c2df442a10d31c92587ea5, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.1598053
+      objectReference: {fileID: 0}
     - target: {fileID: 4460881456925658021, guid: 613eb07459c2df442a10d31c92587ea5, type: 3}
       propertyPath: m_Name
       value: Coin

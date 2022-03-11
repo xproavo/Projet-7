@@ -70,7 +70,6 @@ public class GameManager : MonoBehaviour
 
     private void InitTimeOfDay()
     {
-        CurrentTimeOfDay = TimeOfDay.Day;
         StartCoroutine(UpdateTimeOfDayCoroutine());
     }
 

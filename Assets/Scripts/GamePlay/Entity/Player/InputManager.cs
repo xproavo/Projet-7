@@ -8,11 +8,13 @@ public class InputManager : MonoBehaviour
 
     private MoveManager _moveManager;
     private StateManager _stateManager;
+    private Player _player;
 
     void Awake()
     {
         _moveManager = GetComponent<MoveManager>();
         _stateManager = GetComponent<StateManager>();
+        _player = GetComponent<Player>();
     }
 
     void Update()
@@ -28,8 +30,10 @@ public class InputManager : MonoBehaviour
 
             if (Input.GetButtonDown("Jump"))
                 _moveManager.Jump = true;
-            if (Input.GetButtonUp("Jump"))
-                _moveManager.Jump = false;
+
+            if (Input.GetKeyDown("a"))
+                _player.Attack();
+
 
 
 

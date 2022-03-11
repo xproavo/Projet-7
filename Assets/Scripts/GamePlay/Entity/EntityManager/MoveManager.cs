@@ -88,8 +88,8 @@ public class MoveManager : MonoBehaviour
 
         if (Movable)
         {
-            //_body2d.AddForce(_move * SpeedMove );
-            transform.position += _move * SpeedMove * Time.deltaTime; //peux posezr problem a voir avec addForce
+            //_body2d.AddForce(_move * SpeedMove);
+            transform.position += _move * SpeedMove * Time.deltaTime; //peux poser probleme a voir avec addForce
         }
     }
 
@@ -118,10 +118,30 @@ public class MoveManager : MonoBehaviour
     public float GetMoveXValue()
         { return _move.x; }
 
+    public Vector2 DirectionSee()
+    {
+        if (!_spriteRenderer.flipX)
+        {
+            return Vector2.right;
+        }
+        else
+        {
+            return Vector2.left;
+        }
+    }
+
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + (Vector3.down * DetectGroundRange));
+
+        Vector3 vector3 = Vector3.right;
+        if (_spriteRenderer != null)
+        {
+            vector3 = new Vector3(DirectionSee().x, DirectionSee().y);
+        }
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, transform.position + vector3);
     }
 }
