@@ -4,26 +4,48 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
-    public float length, startpos;
-    public GameObject cam;
-    public float parallaxEffect;
+    [SerializeField] private Vector2 parallaxEffectMultiplier;
+    [SerializeField] private bool infiniteVertical;
+    [SerializeField] private bool infiniteHorizontal;
 
-    // Start is called before the first frame update
-    void Start()
+    private Transform CameraTransform;
+    private Vector3 lastCameraPosition;
+    private float textureUnitSizeX;
+    private float textureUnitSizeY;
+
+    private void Start()
     {
-        startpos = transform.position.x;
-        length = GetComponent<SpriteRenderer>().bounds.size.x;
+        CameraTransform = Camera.main.transform;
+        lastCameraPosition = CameraTransform.position;
+        Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+        Texture2D texture = sprite.texture;
+        textureUnitSizeX = texture.width / sprite.pixelsPerUnit;
+        textureUnitSizeY = texture.height / sprite.pixelsPerUnit;
+
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void LateUpdate()
     {
-        float temp = (cam.transform.position.x * (1 - parallaxEffect));
-        float dist = (cam.transform.position.x * parallaxEffect);
+        Vector3 deltaMovement = CameraTransform.position - lastCameraPosition;
+        transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x, deltaMovement.y * parallaxEffectMultiplier.x);
+        lastCameraPosition = CameraTransform.position;
 
-        transform.position = new Vector3(startpos + dist, transform.position.y, transform.position.z);
-
-        if (temp > startpos + length) startpos += length;
-        else if (temp < startpos - length) startpos -= length;
+        if (infiniteHorizontal) 
+        { 
+            if (Mathf.Abs(CameraTransform.position.x - transform.position.x) >= textureUnitSizeX)
+            {
+                float offsetPositionX = (CameraTransform.position.x - transform.position.x) % textureUnitSizeX;
+                transform.position = new Vector3(CameraTransform.position.x + offsetPositionX, transform.position.y);
+            }
+        }
+        if (infiniteVertical)
+        {
+            if (Mathf.Abs(CameraTransform.position.y - transform.position.y) >= textureUnitSizeY)
+            {
+                float offsetPositionY = (CameraTransform.position.y - transform.position.y) % textureUnitSizeY;
+                transform.position = new Vector3(transform.position.x, CameraTransform.position.y + offsetPositionY);
+            }
+        }
+            
     }
 }
