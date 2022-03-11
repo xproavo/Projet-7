@@ -8942,11 +8942,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-<<<<<<< HEAD
-    m_SensorSize: {x: 2.0276244, y: 1}
-=======
     m_SensorSize: {x: 1.3333334, y: 1}
->>>>>>> 3df691c573a0fe1fa632e327854133a8f4a9abd3
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
