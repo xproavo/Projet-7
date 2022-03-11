@@ -59,7 +59,8 @@ public class GameManager : MonoBehaviour
 
     private void StopTimeofDay()
     {
-        StopCoroutine(UpdateTimeOfDayCoroutine());//problem a voir avec Kevin
+
+        StopAllCoroutines();
         if (CurrentTimeOfDay != TimeOfDay.Day)
         {
             CurrentTimeOfDay = TimeOfDay.Day;
