@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public string levelToLoad;
 
-    public GameObject settingsWindow;
+    //public GameObject settingsWindow;
 
     public void StartGame()
     {

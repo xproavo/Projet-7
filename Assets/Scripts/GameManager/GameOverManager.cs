@@ -5,6 +5,7 @@ public class GameOverManager : MonoBehaviour
 {
     public GameObject gameOverUI;
     public static GameOverManager instance;
+    public string SceneToLoad;
     private void Awake()
     {
         if (instance != null)
@@ -24,9 +25,9 @@ public class GameOverManager : MonoBehaviour
         //Game Over UI off
         gameOverUI.SetActive(false);
     }
-    public void MainMenuButton()
+    public void MainMenuButton(string SceneToLoad)
     {
-        // Retour menu principale
+        SceneManager.LoadScene(SceneToLoad);
     }
 
     public void ExitButton()
