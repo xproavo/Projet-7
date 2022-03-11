@@ -30,6 +30,6 @@ public class FireBall : MonoBehaviour
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2( _dirToMove.x * HitForce, 100));
             print("pass");
         }
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }

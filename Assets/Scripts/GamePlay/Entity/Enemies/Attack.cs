@@ -70,12 +70,14 @@ public class Attack : MonoBehaviour
         }
     }
 
+    private bool test = true;
 
     public void DoAttackWithFireBall(Vector2 dirAttack, float DetectRange, LayerMask layerHit)
     {
         switch (attackState)
         {
             case AttackState.Check:
+                print(attackState);
                 _isAttackable = Physics2D.Raycast(transform.position, dirAttack, DetectRange, layerHit.value);
                 _haveObstacle = Physics2D.Raycast(transform.position, dirAttack, DetectRange, _moveManager.GroundLayer.value);
                 if (_isAttackable.collider != null && _haveObstacle.collider == null)
@@ -84,6 +86,8 @@ public class Attack : MonoBehaviour
                 }
                 break;
             case AttackState.Prepare:
+                print(attackState);
+
                 if (!_isAttackable.collider.gameObject.GetComponent<StateManager>().Death && !_isAttackable.collider.gameObject.GetComponent<StateManager>().Invicibility)
                 {
                     attackState = AttackState.Attack;
@@ -95,15 +99,18 @@ public class Attack : MonoBehaviour
             case AttackState.Attack:
 
 
-                if (_animateManager.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
+                if (_animateManager.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5 && test)
                 {
+                    print(attackState);
                     attackState = AttackState.End;
-
-                    GameObject.Instantiate(FireBallPrefab, transform.position, Quaternion.identity);
+                    test = false;
+                    GameObject.Instantiate(FireBallPrefab, new Vector3(10,-37), Quaternion.identity);
                 }
 
                 break;
             case AttackState.End:
+                print(attackState);
+
                 attackState = AttackState.Check;
                 break;
         }
