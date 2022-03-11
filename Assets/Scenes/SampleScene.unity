@@ -3303,7 +3303,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &586543195
 SpriteRenderer:
@@ -3989,7 +3989,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &809005226
 SpriteRenderer:
@@ -9474,7 +9474,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.0478821, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -10515,13 +10515,9 @@ Transform:
   m_LocalPosition: {x: 57.6, y: 8.62, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 586543194}
-  - {fileID: 1612225876}
-  - {fileID: 809005225}
-  - {fileID: 1594791258}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1869477596
 MonoBehaviour:
@@ -10535,10 +10531,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa237df71cf5804ebfcae9858d6661b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 0
-  startpos: 0
-  cam: {fileID: 519420028}
-  parallaxEffect: 100
+  parallaxEffectMultiplier: {x: 0, y: 0}
+  infiniteVertical: 0
+  infiniteHorizontal: 0
 --- !u!212 &1869477597
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10580,15 +10575,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 04ebfb6d0a38150469c02ff0ff3bd62f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 35.75681, y: 11.820001}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1878487208
