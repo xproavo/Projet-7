@@ -35,7 +35,7 @@ public class Parallax : MonoBehaviour
             if (Mathf.Abs(CameraTransform.position.x - transform.position.x) >= textureUnitSizeX)
             {
                 float offsetPositionX = (CameraTransform.position.x - transform.position.x) % textureUnitSizeX;
-                transform.position = new Vector3(CameraTransform.position.x + offsetPositionX, transform.position.y);
+                transform.position = new Vector3(CameraTransform.position.x + offsetPositionX, transform.position.y, transform.position.z);
             }
         }
         if (infiniteVertical)
@@ -43,7 +43,7 @@ public class Parallax : MonoBehaviour
             if (Mathf.Abs(CameraTransform.position.y - transform.position.y) >= textureUnitSizeY)
             {
                 float offsetPositionY = (CameraTransform.position.y - transform.position.y) % textureUnitSizeY;
-                transform.position = new Vector3(transform.position.x, CameraTransform.position.y + offsetPositionY);
+                transform.position = new Vector3(transform.position.x, CameraTransform.position.y + offsetPositionY, transform.position.z);
             }
         }
             

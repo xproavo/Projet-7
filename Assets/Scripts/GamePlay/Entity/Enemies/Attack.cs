@@ -70,14 +70,18 @@ public class Attack : MonoBehaviour
         }
     }
 
-    private bool test = true;
 
     public void DoAttackWithFireBall(Vector2 dirAttack, float DetectRange, LayerMask layerHit)
     {
+        if (dirAttack.x > 0)
+            this.GetComponent<SpriteRenderer>().flipX = false;
+        else
+            this.GetComponent<SpriteRenderer>().flipX = true;
+
+
         switch (attackState)
         {
             case AttackState.Check:
-                print(attackState);
                 _isAttackable = Physics2D.Raycast(transform.position, dirAttack, DetectRange, layerHit.value);
                 _haveObstacle = Physics2D.Raycast(transform.position, dirAttack, DetectRange, _moveManager.GroundLayer.value);
                 if (_isAttackable.collider != null && _haveObstacle.collider == null)
@@ -86,7 +90,6 @@ public class Attack : MonoBehaviour
                 }
                 break;
             case AttackState.Prepare:
-                print(attackState);
 
                 if (!_isAttackable.collider.gameObject.GetComponent<StateManager>().Death && !_isAttackable.collider.gameObject.GetComponent<StateManager>().Invicibility)
                 {
@@ -99,17 +102,16 @@ public class Attack : MonoBehaviour
             case AttackState.Attack:
 
 
-                if (_animateManager.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5 && test)
+                if (_animateManager.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
                 {
-                    print(attackState);
                     attackState = AttackState.End;
-                    test = false;
-                    GameObject.Instantiate(FireBallPrefab, new Vector3(10,-37), Quaternion.identity);
+                    var _dirSee = new Vector3(_moveManager.DirectionSee().x, _moveManager.DirectionSee().y);
+                    GameObject clone = GameObject.Instantiate(FireBallPrefab, transform.position + _dirSee, Quaternion.identity);
+                    clone.gameObject.GetComponent<FireBall>().ChangeTheDirToMove(dirAttack.normalized);
                 }
 
                 break;
             case AttackState.End:
-                print(attackState);
 
                 attackState = AttackState.Check;
                 break;

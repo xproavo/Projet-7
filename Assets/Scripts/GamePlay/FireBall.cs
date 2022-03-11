@@ -17,7 +17,7 @@ public class FireBall : MonoBehaviour
         transform.position += _dirToMove * Speed * Time.deltaTime;
     }
 
-    public void changeTheDirToMove(Vector3 vec3)
+    public void ChangeTheDirToMove(Vector3 vec3)
     {
         _dirToMove = vec3;
     }
@@ -30,6 +30,6 @@ public class FireBall : MonoBehaviour
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2( _dirToMove.x * HitForce, 100));
             print("pass");
         }
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 }
