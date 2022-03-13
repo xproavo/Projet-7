@@ -9,7 +9,7 @@ public class SimpleSkeletonIA : MonoBehaviour
 
     public Vector2 WaitingAfterReturnMinAndMaxSecond = new Vector2(3, 10);
 
-    private Vector3 _dirMove;
+    public  Vector3 DirMove;
     private bool _focusEnemy = false;
 
     private SpriteRenderer _spriteRenderer;
@@ -23,6 +23,8 @@ public class SimpleSkeletonIA : MonoBehaviour
         _moveManager = GetComponent<MoveManager>();
         _stateManager = GetComponent<StateManager>();
         _attack = GetComponent<Attack>();
+
+
 
         _stateManager.Coin = Random.Range(0, MaxCoin + 1);
 
@@ -42,8 +44,8 @@ public class SimpleSkeletonIA : MonoBehaviour
             _moveManager.NullMoveXValue();
             if (_focusEnemy)
             {
-                _dirMove.Normalize();
-                _moveManager.ChangeMoveXValue(_dirMove.x);
+                DirMove.Normalize();
+                _moveManager.ChangeMoveXValue(DirMove.x);
 
                 if (!_stateManager.Invicibility)
                     _attack.DoAttackWithMeleeWeapon(_moveManager.DirectionSee(), _stateManager.AttackRange, _stateManager.EnemyLayer);
@@ -72,7 +74,7 @@ public class SimpleSkeletonIA : MonoBehaviour
         if (_stateManager.Death)
             StopAllCoroutines();
     }
-
+ 
     private IEnumerator Waiting()
     {
         while (true)
@@ -83,37 +85,15 @@ public class SimpleSkeletonIA : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void EndFocusEnemy()
     {
-        if (collision.gameObject.transform.CompareTag("Player") && !_stateManager.Death)
-        {
-            StopCoroutine(Waiting());
-            _focusEnemy = true;
-        }
+        StartCoroutine(Waiting());
+        _focusEnemy = false;
+    }
+    public void OnFocusEnemy()
+    {
+        StopCoroutine(Waiting());
+        _focusEnemy = true;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision != null && !_stateManager.Death)
-        {
-            if (collision.transform.CompareTag("Player"))
-            {
-
-                if (collision.GetComponent<StateManager>().Death)
-                {
-                    _focusEnemy = false;
-                }
-                _dirMove =  collision.transform.position - transform.position;
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.transform.CompareTag("Player") && !_stateManager.Death)
-        {
-            StartCoroutine(Waiting());
-            _dirMove = Vector3.zero;
-        }
-    }
 }
