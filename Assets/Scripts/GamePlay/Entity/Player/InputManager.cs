@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    private bool _controlEnabled = true;
+    public bool _controlEnabled = true;
 
     private MoveManager _moveManager;
     private StateManager _stateManager;

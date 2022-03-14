@@ -48,6 +48,6 @@ public class SkeletonMageIA : MonoBehaviour
         var dir = Player.transform.position - transform.position;
         var distance = Vector3.Distance(transform.position, Player.transform.position);
 
-        Gizmos.DrawLine(transform.position,  transform.position + dir * distance);
+        Gizmos.DrawLine(transform.position,  transform.position + dir );
     }
 }
