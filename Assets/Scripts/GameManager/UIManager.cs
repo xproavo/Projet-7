@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Slider _lifePointSlider;
+    public TextMeshProUGUI score;
 
     private GameObject _player;
     public GameObject GameOverUI;
@@ -29,6 +30,7 @@ public class UIManager : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
 
         InitPlayerLifeBar();
+        UpdateCoin();
     }
 
     public void InitPlayerLifeBar()
@@ -48,4 +50,9 @@ public class UIManager : MonoBehaviour
             GameOverUI.gameObject.SetActive(true);
     }
 
+    public void UpdateCoin()
+    {
+        var actuelCoin = _player.GetComponent<StateManager>().Coin.ToString();
+        score.text = actuelCoin;
+    }
 }

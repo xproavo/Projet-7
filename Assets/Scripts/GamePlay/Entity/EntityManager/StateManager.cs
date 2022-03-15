@@ -22,6 +22,7 @@ public class StateManager : MonoBehaviour
 
     private MoveManager _moveManager;
     private AnimateManager _animateManager;
+    private StateManager _statemanager;
 
     public delegate void HitDelegate(float damage);
     public event HitDelegate OnTakeDamage;
@@ -31,6 +32,7 @@ public class StateManager : MonoBehaviour
     {
         _moveManager = GetComponent<MoveManager>();
         _animateManager = GetComponent<AnimateManager>();
+        _statemanager = GetComponent<StateManager>();
         OnTakeDamage += Hit;
 
     }

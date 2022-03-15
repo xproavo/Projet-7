@@ -18,5 +18,9 @@ public class Coin : MonoBehaviour
             collision.gameObject.GetComponent<StateManager>().TakeCoin(_value);
             Destroy(gameObject);
         }
+        if (collision.gameObject.tag == "Player")
+        {
+            UIManager.Instance.UpdateCoin();
+        }
     }
 }
