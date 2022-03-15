@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public string levelToLoad;
+    public GameObject commands;
+    public GameObject menu;
 
     //public GameObject settingsWindow;
 
@@ -14,15 +16,17 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(levelToLoad);
     }
 
-    //public void SettingsButton()
-    //{
-     //   settingsWindow.SetActive(true);
-    //}
+    public void CommandsButton()
+    {
+        commands.SetActive(true);
+        menu.SetActive(false);
+    }
 
-    //public void CloseSettingsWindow()
-    //{
-     //   settingsWindow.SetActive(false);
-    //}
+    public void CloseCommandsWindow()
+    {
+        commands.SetActive(false);
+        menu.SetActive(true);
+    }
 
     public void QuitGame()
     {
