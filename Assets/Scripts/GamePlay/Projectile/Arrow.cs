@@ -16,17 +16,30 @@ public class Arrow : MonoBehaviour
     public void Throw(Vector2 vec2)
     {
         _dirToMove = vec2;
-        GetComponent<Rigidbody2D>().AddForce(vec2 * SpeedForce);
+        this.gameObject.GetComponent<Rigidbody2D>().AddForce(vec2 * SpeedForce);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Player" || collision.transform.tag == "Enemy")
+        if (collision.transform.tag == "Player")
         {
             collision.gameObject.GetComponent<StateManager>().Attack(Damage);
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(_dirToMove.x * HitForce, 100));
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Enemy")
+        {
+            if (collision.GetComponent<StateManager>().Death)
+                return;
+
+            collision.gameObject.GetComponent<StateManager>().Attack(Damage);
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(_dirToMove.x * HitForce, 100));
+            Destroy(gameObject);
+        }
     }
 
     private void UnOverlapPlayer()

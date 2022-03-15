@@ -6,6 +6,8 @@ public class CrossBow : MonoBehaviour
 {
     public Vector2 ShootDirection;
 
+    public Vector3 AjustArrowSpawnPos;
+
     [SerializeField]
     private GameObject ArrowPrefab;
 
@@ -15,6 +17,7 @@ public class CrossBow : MonoBehaviour
 
     private bool canPick = false;
     private bool focus = false;
+    private bool canAttack = true;
 
     private AttackState _attackState;
 
@@ -37,9 +40,11 @@ public class CrossBow : MonoBehaviour
         }
         if (focus)
         {
-            if (Input.GetKey("a"))
+            if (Input.GetKey("a") && canAttack)
             {
-                Attack();
+                _animator.SetTrigger("Attack");
+                canAttack = false;
+
             }
         }
         if (ShootDirection.x > 0)
@@ -52,35 +57,9 @@ public class CrossBow : MonoBehaviour
 
     public void Attack()
     {
-        switch (_attackState)
-        {
-            case AttackState.Check:
-                _attackState = AttackState.Prepare;
-                break;
-
-            case AttackState.Prepare:
-                _attackState = AttackState.Attack;
-                _animator.SetTrigger("Attack");
-                
-                
-                break;
-            case AttackState.Attack:
-
-
-                if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
-                {
-                    _attackState = AttackState.End;
-
-                    GameObject clone = GameObject.Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
-                    clone.gameObject.GetComponent<Arrow>().Throw(ShootDirection.normalized);
-                }
-                break;
-
-            case AttackState.End:
-                _attackState = AttackState.Check;
-                break;
-        }
-
+        GameObject clone = GameObject.Instantiate(ArrowPrefab, transform.position + AjustArrowSpawnPos, Quaternion.identity);
+        clone.gameObject.GetComponent<Arrow>().Throw(ShootDirection.normalized);
+        canAttack = true;
     }
 
 
