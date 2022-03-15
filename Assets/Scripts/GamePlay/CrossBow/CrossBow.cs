@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class CrossBow : MonoBehaviour
 {
+    public float ThrowForce = 10f;
+
     public Vector2 ShootDirection;
 
     public Vector3 AjustArrowSpawnPos;
 
+    public Transform AimPoint;
+
     [SerializeField]
     private GameObject ArrowPrefab;
+
 
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
@@ -21,12 +26,18 @@ public class CrossBow : MonoBehaviour
 
     private AttackState _attackState;
 
+    private bool notTouchPlayer;
+
+    private Vector3 _scale;
+
     private void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator.SetTrigger("Quit");
+        _scale = transform.localScale;
+        AimPoint.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -46,11 +57,20 @@ public class CrossBow : MonoBehaviour
                 canAttack = false;
 
             }
+
+
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                transform.localScale = new Vector3(-_scale.x, _scale.y, _scale.z);
+            }else if (Input.GetAxis("Horizontal") < 0)
+            {
+                transform.localScale = _scale;
+            }
+
+
+            ShootDirection.x = AimPoint.position.x - (transform.position.x + AjustArrowSpawnPos.x);
+            ShootDirection.y = AimPoint.position.y - (transform.position.y + AjustArrowSpawnPos.y);
         }
-        if (ShootDirection.x > 0)
-            this.GetComponent<SpriteRenderer>().flipX = true;
-        else
-            this.GetComponent<SpriteRenderer>().flipX = false;
 
     }
 
@@ -58,7 +78,7 @@ public class CrossBow : MonoBehaviour
     public void Attack()
     {
         GameObject clone = GameObject.Instantiate(ArrowPrefab, transform.position + AjustArrowSpawnPos, Quaternion.identity);
-        clone.gameObject.GetComponent<Arrow>().Throw(ShootDirection.normalized);
+        clone.gameObject.GetComponent<Arrow>().Throw(ShootDirection, ThrowForce, false);
         canAttack = true;
     }
 
@@ -74,11 +94,13 @@ public class CrossBow : MonoBehaviour
         {
             _player.GetComponent<InputManager>().enabled = false;
             _player.GetComponent<MoveManager>().Movable = false;
+            AimPoint.gameObject.SetActive(true);
         }
         else
         {
             _player.GetComponent<InputManager>().enabled = true;
             _player.GetComponent<MoveManager>().Movable = true;
+            AimPoint.gameObject.SetActive(false);
         }
     }
 
