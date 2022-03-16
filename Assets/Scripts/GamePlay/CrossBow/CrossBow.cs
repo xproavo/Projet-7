@@ -7,6 +7,7 @@ public class CrossBow : MonoBehaviour
     public float ThrowForce = 10f;
 
     public Vector2 ShootDirection;
+    private Vector2 _shootDirectionClone;
 
     public Vector3 AjustArrowSpawnPos;
 
@@ -51,8 +52,11 @@ public class CrossBow : MonoBehaviour
         }
         if (focus)
         {
+            ShootDirection.y = AimPoint.position.y - (transform.position.y + AjustArrowSpawnPos.y);
+
             if (Input.GetKey("a") && canAttack)
             {
+                _shootDirectionClone = ShootDirection;
                 _animator.SetTrigger("Attack");
                 canAttack = false;
 
@@ -67,9 +71,8 @@ public class CrossBow : MonoBehaviour
                 transform.localScale = _scale;
             }
 
-
             ShootDirection.x = AimPoint.position.x - (transform.position.x + AjustArrowSpawnPos.x);
-            ShootDirection.y = AimPoint.position.y - (transform.position.y + AjustArrowSpawnPos.y);
+
         }
 
     }
@@ -78,7 +81,7 @@ public class CrossBow : MonoBehaviour
     public void Attack()
     {
         GameObject clone = GameObject.Instantiate(ArrowPrefab, transform.position + AjustArrowSpawnPos, Quaternion.identity);
-        clone.gameObject.GetComponent<Arrow>().Throw(ShootDirection, ThrowForce, false);
+        clone.gameObject.GetComponent<Arrow>().Throw(_shootDirectionClone, ThrowForce, false);
         canAttack = true;
     }
 

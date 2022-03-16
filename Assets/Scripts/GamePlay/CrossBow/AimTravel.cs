@@ -13,9 +13,4 @@ public class AimTravel : MonoBehaviour
         _parentCrossBowScript = GetComponentInParent<CrossBow>();
         transform.localPosition = new Vector3(distanceToParent + _parentCrossBowScript.AjustArrowSpawnPos.x, _parentCrossBowScript.AjustArrowSpawnPos.y);
     }
-
-
-
-
-    
 }
