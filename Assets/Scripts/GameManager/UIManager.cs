@@ -12,8 +12,12 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Slider _lifePointSlider;
     public TextMeshProUGUI score;
+    public TextMeshProUGUI potionprix1;
+    public TextMeshProUGUI potionprix2;
+    public TextMeshProUGUI potionprix3;
 
     private GameObject _player;
+    public GameObject _potion;
     public GameObject GameOverUI;
 
     private void Awake()
@@ -31,6 +35,7 @@ public class UIManager : MonoBehaviour
 
         InitPlayerLifeBar();
         UpdateCoin();
+        UpdatePotion();
     }
 
     public void InitPlayerLifeBar()
@@ -54,5 +59,12 @@ public class UIManager : MonoBehaviour
     {
         var actuelCoin = _player.GetComponent<StateManager>().Coin.ToString();
         score.text = actuelCoin;
+    }
+    public void UpdatePotion()
+    {
+        var prixpotion = _potion.GetComponent<NPCMenu>().PrixPotion.ToString();
+        potionprix1.text = prixpotion;
+        potionprix2.text = prixpotion;
+        potionprix3.text = prixpotion;
     }
 }

@@ -7,9 +7,10 @@ public class NPCMenu : MonoBehaviour
     public static bool inNPC;
     public GameObject NPCmenu;
     public static bool trigger = false;
-
+    
     private GameObject _player;
     public GameObject _interaction;
+    public float PrixPotion;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,5 +65,18 @@ public class NPCMenu : MonoBehaviour
     {
         trigger = false;
         _interaction.SetActive(false);
+    }
+
+    public void BuyPotion()
+    {
+        if (_player.GetComponent<StateManager>().Coin >= PrixPotion)
+        {
+            var actuelCoin = _player.GetComponent<StateManager>().Coin;
+            actuelCoin -= PrixPotion;
+            _player.GetComponent<StateManager>().Coin = actuelCoin;
+            UIManager.Instance.UpdateCoin();
+            Debug.Log("Potion acheter");
+        }
+
     }
 }
