@@ -22,25 +22,17 @@ public class Arrow : MonoBehaviour
         this.gameObject.GetComponent<Rigidbody2D>().AddForce(vec2 * force);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+    
         if (collision.transform.tag == "Player" && CanTouchPlayer)
         {
             collision.gameObject.GetComponent<StateManager>().Attack(Damage);
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(_dirToMove.x * HitForceX, HitForceY));
             Destroy(gameObject);
-        }else if(collision.transform.tag == "Enemy")
-        {
-            return;
         }
-        HitForceY = 0;
-        HitForceX = 0;
-        Damage = 0;
-        Destroy(gameObject, 1f);
-    }
+    
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
         if (collision.transform.tag == "Enemy")
         {
             if (collision.GetComponent<StateManager>().Death)
@@ -50,6 +42,10 @@ public class Arrow : MonoBehaviour
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(_dirToMove.x * HitForceX, HitForceY));
             Destroy(gameObject);
         }
+        HitForceY = 0;
+        HitForceX = 0;
+        Damage = 0;
+        Destroy(gameObject, 0.4f);
     }
 
     private void UnOverlapPlayer()
