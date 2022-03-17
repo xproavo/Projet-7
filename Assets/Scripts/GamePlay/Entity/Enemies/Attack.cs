@@ -51,8 +51,6 @@ public class Attack : MonoBehaviour
                     attackState = AttackState.End;
                 break;
             case AttackState.Attack:
-
-
                 if (_animateManager.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
                 {
                     attackState = AttackState.End;
@@ -62,7 +60,6 @@ public class Attack : MonoBehaviour
 
                     hitGameObjectState.gameObject.GetComponent<StateManager>().Attack(_stateManager.Damage);
                 }
-
                 break;
             case AttackState.End:
                 attackState = AttackState.Check;
