@@ -20,6 +20,13 @@ public class Arrow : MonoBehaviour
         CanTouchPlayer = canTouchPlayer;
         _dirToMove = vec2;
         this.gameObject.GetComponent<Rigidbody2D>().AddForce(vec2 * force);
+        this.gameObject.transform.right = _dirToMove.normalized;
+    }
+
+    private void Update()
+    {
+        this.gameObject.transform.right = GetComponent<Rigidbody2D>().velocity.normalized;
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
