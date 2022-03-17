@@ -97,6 +97,7 @@ public class CrossBow : MonoBehaviour
         {
             _player.GetComponent<InputManager>().enabled = false;
             _player.GetComponent<MoveManager>().Movable = false;
+            _player.GetComponent<MoveManager>().ChangeMoveXValue(0);
             AimPoint.gameObject.SetActive(true);
         }
         else

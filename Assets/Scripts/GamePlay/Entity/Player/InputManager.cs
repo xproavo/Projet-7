@@ -26,6 +26,7 @@ public class InputManager : MonoBehaviour
                 _moveManager.ClimbOnLadder(Input.GetAxis("Vertical"));
                 return;
             }
+
             _moveManager.ChangeMoveXValue(Input.GetAxis("Horizontal"));
 
             if (Input.GetButtonDown("Jump"))
@@ -35,9 +36,6 @@ public class InputManager : MonoBehaviour
 
             if (Input.GetKeyDown("a"))
                 _player.Attack();
-
-
-
 
             //if (Input.GetKeyDown("a"))
             //    _moveManager.Roll = true; 

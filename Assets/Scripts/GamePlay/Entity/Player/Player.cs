@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     private AnimateManager _animateManager;
     private MoveManager _moveManager;
 
-
     void Start()
     {
         _stateManager = GetComponent<StateManager>();
@@ -36,6 +35,7 @@ public class Player : MonoBehaviour
         {
             transform.GetChild(0).gameObject.SetActive(false);
         }
+
     }
 
     public void Attack()
