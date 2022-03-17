@@ -11,6 +11,9 @@ public class NPCMenu : MonoBehaviour
     private GameObject _player;
     public GameObject _interaction;
     public float PrixPotion;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,21 +27,24 @@ public class NPCMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-          if ((Input.GetKeyDown(KeyCode.E)) && trigger)
+        if ((Input.GetKeyDown(KeyCode.E)) && trigger)
+        {
+          if (inNPC)
           {
-            if (inNPC)
-            {
-                ResumeGame();
-                _player.GetComponent<InputManager>().enabled = true;
-            }
-            else
-            {
-                NPCpause();
-                _player.GetComponent<InputManager>().enabled = false;
-                _player.GetComponent<MoveManager>().ChangeMoveXValue(0);
-            }
+              ResumeGame();
+              _player.GetComponent<InputManager>().enabled = true;
           }
+          else
+          {
+              NPCpause();
+              _player.GetComponent<InputManager>().enabled = false;
+              _player.GetComponent<MoveManager>().ChangeMoveXValue(0);
+          }
+        }
     }
+
+
+
 
     public void ResumeGame()
     {
@@ -58,6 +64,7 @@ public class NPCMenu : MonoBehaviour
         {
             trigger = true;
             _interaction.SetActive(true);
+            GetComponent<Interactible>().IsInteratible();
         }
     }
 
@@ -65,6 +72,7 @@ public class NPCMenu : MonoBehaviour
     {
         trigger = false;
         _interaction.SetActive(false);
+        GetComponent<Interactible>().IsNotInteratible();
     }
 
     public void BuyPotion()

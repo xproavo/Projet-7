@@ -26,7 +26,6 @@ public class Arrow : MonoBehaviour
     private void Update()
     {
         this.gameObject.transform.right = GetComponent<Rigidbody2D>().velocity.normalized;
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

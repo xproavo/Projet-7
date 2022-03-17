@@ -26,6 +26,18 @@ public class Player : MonoBehaviour
         _stateManager.OnTakeDamage += UIManager.Instance.OnPlayerDeath;
     }
 
+    private void FixedUpdate()
+    {
+        if (GameManager.Instance.CurrentTimeOfDay == GameManager.TimeOfDay.Night && !_stateManager.Death)
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
+        else if (GameManager.Instance.CurrentTimeOfDay == GameManager.TimeOfDay.Day && !_stateManager.Death)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
+    }
+
     public void Attack()
     {
         if (_attackable)
@@ -53,8 +65,6 @@ public class Player : MonoBehaviour
                 }
 
             }
-
-
 
             StartCoroutine(AttackCouldownCoroutine());
 

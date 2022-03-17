@@ -115,6 +115,8 @@ public class CrossBow : MonoBehaviour
         {
             _animator.SetTrigger("Enter");
             canPick = true;
+            GetComponent<Interactible>().IsInteratible();
+
         }
     }
 
@@ -124,6 +126,8 @@ public class CrossBow : MonoBehaviour
         {
             _animator.SetTrigger("Quit");
             canPick = false;
+            GetComponent<Interactible>().IsNotInteratible();
+
         }
     }
     public enum AttackState
