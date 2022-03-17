@@ -12,12 +12,16 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Slider _lifePointSlider;
     public TextMeshProUGUI score;
-    public TextMeshProUGUI potionprix1;
-    public TextMeshProUGUI potionprix2;
-    public TextMeshProUGUI potionprix3;
+    public TextMeshProUGUI marchandprix1;
+    public TextMeshProUGUI marchandprix2;
+    public TextMeshProUGUI marchandprix3;
+    public TextMeshProUGUI forgeronprix1;
+    public TextMeshProUGUI forgeronprix2;
+    public TextMeshProUGUI forgeronprix3;
 
     private GameObject _player;
     public GameObject _potion;
+    public GameObject _forgeron;
     public GameObject GameOverUI;
 
     private void Awake()
@@ -63,8 +67,12 @@ public class UIManager : MonoBehaviour
     public void UpdatePotion()
     {
         var prixpotion = _potion.GetComponent<NPCMenu>().PrixPotion.ToString();
-        potionprix1.text = prixpotion;
-        potionprix2.text = prixpotion;
-        potionprix3.text = prixpotion;
+        var forgeronprix = _forgeron.GetComponent<ForgeronMenu>().ForgeronPrix.ToString();
+        marchandprix1.text = prixpotion;
+        marchandprix2.text = prixpotion;
+        marchandprix3.text = prixpotion;
+        forgeronprix1.text = forgeronprix;
+        forgeronprix2.text = forgeronprix;
+        forgeronprix3.text = forgeronprix;
     }
 }
