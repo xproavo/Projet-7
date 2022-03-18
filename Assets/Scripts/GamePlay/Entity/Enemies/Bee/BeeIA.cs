@@ -99,6 +99,7 @@ public class BeeIA : MonoBehaviour
             StopAllCoroutines();
             Destroy(gameObject, TimeBeforsDestroyOnDeath);
             GetComponent<Collider2D>().enabled = false;
+            GetComponent<Rigidbody2D>().gravityScale = 1;
             _death = true;
         }
         

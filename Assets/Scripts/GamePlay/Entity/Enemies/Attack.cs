@@ -10,7 +10,6 @@ public class Attack : MonoBehaviour
     private RaycastHit2D _isAttackable;
     private RaycastHit2D _haveObstacle;
 
-    public GameObject FireBallPrefab;
 
     private AnimateManager _animateManager;
     private StateManager _stateManager;
@@ -91,21 +90,14 @@ public class Attack : MonoBehaviour
                 if (!_isAttackable.collider.gameObject.GetComponent<StateManager>().Death && !_isAttackable.collider.gameObject.GetComponent<StateManager>().Invicibility)
                 {
                     attackState = AttackState.Attack;
-                    _animateManager.Attack("Attack1");
                 }
                 else
                     attackState = AttackState.End;
                 break;
             case AttackState.Attack:
 
-
-                if (_animateManager.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
-                {
+                    _animateManager.Attack("Attack1"); // a ete modif a moitier par manque de temps
                     attackState = AttackState.End;
-                    var _dirSee = new Vector3(_moveManager.DirectionSee().x, _moveManager.DirectionSee().y);
-                    GameObject clone = GameObject.Instantiate(FireBallPrefab, transform.position + _dirSee, Quaternion.identity);
-                    clone.gameObject.GetComponent<FireBall>().ChangeTheDirToMove(dirAttack.normalized);
-                }
 
                 break;
             case AttackState.End:

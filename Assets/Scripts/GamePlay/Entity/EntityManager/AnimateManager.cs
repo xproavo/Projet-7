@@ -88,4 +88,9 @@ public class AnimateManager : MonoBehaviour
             yield return null;
         }
     }
+
+    public void TP()
+    {
+        _animator.SetTrigger("Teleport");
+    }
 }

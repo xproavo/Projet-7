@@ -13,14 +13,17 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy") && !collision.gameObject.GetComponent<StateManager>().Death)
+        if (collision.gameObject != null)
         {
-            collision.gameObject.GetComponent<StateManager>().TakeCoin(_value);
-            Destroy(gameObject);
-        }
-        if (collision.gameObject.tag == "Player")
-        {
-            UIManager.Instance.UpdateCoin();
+            if ((collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy") && !collision.gameObject.GetComponent<StateManager>().Death)
+            {
+                collision.gameObject.GetComponent<StateManager>().TakeCoin(_value);
+                Destroy(gameObject);
+            }
+            if (collision.gameObject.tag == "Player")
+            {
+                UIManager.Instance.UpdateCoin();
+            }
         }
     }
 }

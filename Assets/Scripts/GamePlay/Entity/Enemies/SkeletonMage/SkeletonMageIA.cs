@@ -4,29 +4,71 @@ using UnityEngine;
 
 public class SkeletonMageIA : MonoBehaviour
 {
+    public GameObject[] WayPoints;
+    public float TimeBeforeTeleport = 5;
 
-    private bool _playerOnTheZone = true;
-    public bool attack;
+    public float CoulDown;
+
+
+    public bool _playerOnTheZone = false;
+    private bool attack = true;
 
     private Vector3 _targetPos;
 
     private Attack _attack;
     private StateManager _stateManager;
+    private MoveManager _moveManager;
+    private AnimateManager _animateManager;
 
-    public GameObject Player;
+    private GameObject _player;
+
+    public GameObject FireBallPrefab;
+
+    private Vector2 _dirAttack;
+
 
     // Start is called before the first frame update
     void Start()
     {
         _attack = GetComponent<Attack>();
         _stateManager = GetComponent<StateManager>();
+        _moveManager = GetComponent<MoveManager>();
+        _animateManager = GetComponent<AnimateManager>();
+
+        _player = GameObject.FindGameObjectWithTag("Player");
+
+        _stateManager.OnTakeDamage += isDeathStopCoroutine;
+
+        StartCoroutine(TeleportMage());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void isDeathStopCoroutine(float damage)
     {
-        
+        if (_stateManager.Death)
+            StopAllCoroutines();
     }
+
+    private IEnumerator TeleportMage()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(TimeBeforeTeleport);
+            _animateManager.TP();
+        }
+
+    }
+
+    public void TPSkeleton()
+    {
+        gameObject.transform.position = WayPoints[Random.Range(0, WayPoints.Length - 1)].transform.position;
+    }
+
+    public void InZone(bool isInZone)
+    {
+        _playerOnTheZone = isInZone;
+    }
+
+
 
     private void FixedUpdate()
     {
@@ -34,19 +76,34 @@ public class SkeletonMageIA : MonoBehaviour
         {
             if (attack)
             {
-                var dir = Player.transform.position - transform.position;
-                var distance = Vector3.Distance(transform.position, Player.transform.position);
-                _attack.DoAttackWithFireBall(dir, distance, _stateManager.EnemyLayer);
+                _dirAttack = _player.transform.position - transform.position;
+                var distance = Vector3.Distance(transform.position, _player.transform.position);
+                _attack.DoAttackWithFireBall(_dirAttack, distance, _stateManager.EnemyLayer);
+                StartCoroutine(AttackCoulDown());
             }
         }
+    }
+
+    public void ThrowFireBall()
+    {
+        var _dirSee = new Vector3(_moveManager.DirectionSee().x, _moveManager.DirectionSee().y);
+        GameObject clone = GameObject.Instantiate(FireBallPrefab, transform.position + _dirSee, Quaternion.identity);
+        clone.gameObject.GetComponent<FireBall>().ChangeTheDirToMove(_dirAttack.normalized);
+    }
+
+    private IEnumerator AttackCoulDown()
+    {
+        attack = false;
+        yield return new WaitForSeconds(CoulDown);
+        attack = true;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
 
-        var dir = Player.transform.position - transform.position;
-        var distance = Vector3.Distance(transform.position, Player.transform.position);
+        var dir = _player.transform.position - transform.position;
+        var distance = Vector3.Distance(transform.position, _player.transform.position);
 
         Gizmos.DrawLine(transform.position,  transform.position + dir );
     }

@@ -19,6 +19,7 @@ public class Bloby : MonoBehaviour
     public float TimeNoise = 0.5f;
     public float NoiseAmplitude = 1;
 
+    public GameObject FinishLine;
 
     private Animator _animator;
     private StateManager _stateManager;
@@ -29,8 +30,13 @@ public class Bloby : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _stateManager = GetComponent<StateManager>();
+        FinishLine.SetActive(false);
     }
 
+    private void Start()
+    {
+        _stateManager.OnTakeDamage += SetFinish;
+    }
 
     private void Update()
     {
@@ -109,4 +115,10 @@ public class Bloby : MonoBehaviour
         }
     }
 
+
+    public void SetFinish(float damage)
+    {
+        if (_stateManager.Death)
+            FinishLine.SetActive(true);
+    }
 }
