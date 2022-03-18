@@ -11,6 +11,8 @@ public class Bloby : MonoBehaviour
     [Range(0f, 100f)]
     public float RageJauge;
 
+    public bool IsAttack;
+
     private Animator _animator;
     private StateManager _stateManager;
 
@@ -21,4 +23,15 @@ public class Bloby : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (IsAttack)
+        {
+            Jump();
+        }
+    }
+
+    private void Jump()
+    {
+    }
 }
