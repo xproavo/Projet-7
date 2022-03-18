@@ -8,6 +8,7 @@ public class StateManager : MonoBehaviour
     public float Coin = 0f;
 
     public bool hit = false;
+    public bool soup = false;
 
     public float Damage = 2f;
     public float AttackRange = 1f;
