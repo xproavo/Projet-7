@@ -22,7 +22,6 @@ public class AnimateFlying : MonoBehaviour
         _body2d = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
-        _moveManager = GetComponent<MoveManager>();
         _stateManager = GetComponent<StateManager>();
         _beeia = GetComponent<BeeIA>();
         _moveManager = GetComponent<MoveManager>();
@@ -45,7 +44,7 @@ public class AnimateFlying : MonoBehaviour
                 _spriteRenderer.flipX = true;
             }
 
-            _animator.SetFloat("velocityX", Mathf.Abs(_moveManager.GetMoveXValue()));
+            _animator.SetFloat("velocityX", Mathf.Abs(_body2d.velocity.x));
             _animator.SetFloat("velocityY", _body2d.velocity.y);
             _animator.SetBool("Grounded", _moveManager.IsGrounded);
 
@@ -74,23 +73,7 @@ public class AnimateFlying : MonoBehaviour
 
     public void Attack(string attackName)
     {
-        _moveManager.Movable = false;
         _moveManager.ChangeMoveXValue(0);
-        _animator.SetTrigger(attackName);
-        StartCoroutine(EndAttack());
     }
 
-    private IEnumerator EndAttack()
-    {
-        bool _continu = true;
-        while (_continu)
-        {
-            if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9)
-            {
-                _moveManager.Movable = true;
-                _continu = false;
-            }
-            yield return null;
-        }
-    }
 }

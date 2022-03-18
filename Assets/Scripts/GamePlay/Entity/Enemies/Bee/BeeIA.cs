@@ -5,6 +5,10 @@ using Pathfinding;
 
 public class BeeIA : MonoBehaviour
 {
+    public float TimeBeforAttack = 4f;
+    private bool _canAttack = true;
+
+
     public Transform target;
 
     public float speed = 200f;
@@ -18,10 +22,15 @@ public class BeeIA : MonoBehaviour
     Seeker seeker;
     Rigidbody2D rb;
 
+    private AnimateFlying _animateFlying;
+    private StateManager _stateManager;
+
     void Start()
     { //recupere et trace le chemin sans actualiser
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+        _animateFlying = GetComponent<AnimateFlying>();
+        _stateManager = GetComponent<StateManager>();
 
         InvokeRepeating("UpdatePath", 0f, .5f);
     }
@@ -74,4 +83,22 @@ public class BeeIA : MonoBehaviour
         }
         
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && _canAttack)
+        {
+            _animateFlying.Attack("Attack1");
+            collision.gameObject.GetComponent<StateManager>().Attack(_stateManager.Damage);
+            StartCoroutine(NoAttack());
+        }
+    }
+
+    private IEnumerator NoAttack()
+    {
+        _canAttack = false;
+        yield return new WaitForSeconds(TimeBeforAttack);
+        _canAttack = true;
+    }
+
 }
