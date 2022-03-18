@@ -117,7 +117,6 @@ public class CrossBow : MonoBehaviour
             _animator.SetTrigger("Enter");
             canPick = true;
             GetComponent<Interactible>().IsInteratible();
-
         }
     }
 
