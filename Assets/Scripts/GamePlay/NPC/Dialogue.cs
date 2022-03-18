@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Dialogue : MonoBehaviour
 {
+
+    [SerializeField] public GameObject Colar;
     public GameObject nextText;
     public GameObject textBefore;
     public static bool trigger = false;
@@ -23,8 +25,12 @@ public class Dialogue : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            Colar.SetActive(true);
+
             trigger = true;
             textBefore.SetActive(true);
+
+            
         }
     }
 
