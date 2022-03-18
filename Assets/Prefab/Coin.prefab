@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4460881455965159290}
   - component: {fileID: 4460881455965159269}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4460881456925658016}
   - component: {fileID: 4460881456925658017}
   - component: {fileID: 4460881456925658019}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
