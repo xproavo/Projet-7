@@ -64,6 +64,14 @@ public class BeeIA : MonoBehaviour
         {
             currentWaypoint++;
         }
+        if (force.x >= 0.01f)
+        {
+            ennemyGFX.localScale = new Vector3(1f, 1f, 1f);
+        }
+        else if (force.x <= -0.01f)
+        {
+            ennemyGFX.localScale = new Vector3(-1f, 1f, 1f);
+        }
         
     }
 }
