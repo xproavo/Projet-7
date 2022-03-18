@@ -95,7 +95,10 @@ public class StateManager : MonoBehaviour
         StartCoroutine(InvicibilityCoroutine());
         if (LifePoint <= 0)
         {
-            _moveManager.ChangeMoveXValue(0);
+            if (_moveManager != null)
+            {
+                _moveManager.ChangeMoveXValue(0);
+            }
             Death = true;
             ThrowCoin();
             return;
@@ -127,7 +130,9 @@ public class StateManager : MonoBehaviour
                     for (int i = 0; i < this.transform.childCount; i++)
                     {
                         var child = transform.GetChild(i);
-                        child.GetComponent<Collider2D>().enabled = false;
+                        if (child != null)
+                            if(child.GetComponent<Collider2D>() != null)
+                                child.GetComponent<Collider2D>().enabled = false;
                     }
                 }
                 _continu = false;
