@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
 
         _stateManager.OnTakeDamage += UIManager.Instance.UpdatePlayerLifeBar;
         _stateManager.OnTakeDamage += UIManager.Instance.OnPlayerDeath;
+        _stateManager.OnTakeDamage += IsDeath;
     }
 
     private void FixedUpdate()
@@ -78,4 +79,14 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(AttackCouldown);
         _attackable = true;
     }
+
+    
+    public void IsDeath(float damage)
+    {
+        if (_stateManager.Death)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
+    }
+
 }

@@ -73,7 +73,7 @@ public class AnimateFlying : MonoBehaviour
 
     public void Attack(string attackName)
     {
-        _moveManager.ChangeMoveXValue(0);
+        _animator.SetTrigger(attackName);
     }
 
 }
