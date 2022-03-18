@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject CoinPrefab;
 
+    public GameObject CineMachineCam;
+
 
     public delegate void TimeOfDayDelegate(float transitionDuration, TimeOfDay timeOfDay);
     public event TimeOfDayDelegate OnTimeOfDaysChanged;

@@ -117,6 +117,8 @@ public class Attack : MonoBehaviour
     }
 
 
+
+
     public void NotMove(float damage)
     {
         StartCoroutine(NotMoveCoroutine());
